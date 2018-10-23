@@ -1,6 +1,7 @@
 var userapi = require('../dataApi/userapi')
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -15,6 +16,7 @@ router.get('/', function(req, res) {
     res.json(users)
   });
 });
+
 
 router.post('/register', function(req, res) {
   var user = {};
@@ -35,4 +37,20 @@ router.post('/register', function(req, res) {
   });
 });
 
+router.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+
+
+router.get('/logout',
+  function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
+
 module.exports = router;
+
+
+

@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors'); 
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,15 +17,43 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//Connect to db 
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:27017/esim');
+ var db = mongoose.connection;
+db.on('error', function (err) {
+  console.log('Connection error', err);
+});
+db.once('open', function () {
+  console.log('Connected to DB.');
+});
+
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(cors()); 
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/', indexRouter);
+
+
+ // Using the flash middleware provided by connect-flash to store messages in session
+ // and displaying in templates
+ var flash = require('connect-flash');
+ app.use(flash());
+ 
+ // Initialize Passport
+ var initPassport = require('./passport/init');
+ initPassport(passport);
+
+ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

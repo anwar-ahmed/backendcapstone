@@ -1,5 +1,6 @@
 var _ = require('lodash');
 var mongoose = require('mongoose');
+var Users = require('../models/users');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/esim');
@@ -13,18 +14,6 @@ db.on('error', function (err) {
 db.once('open', function () {
   console.log('Connected to DB.');
 });
-
-
-var userschema = new mongoose.Schema({
-    emailId: String,
-    password: String,
-    firstName: String,
-    lastName: String,
-    location: String,
-    mobile:String
-});
- 
-var Users = mongoose.model('users',userschema);
 
 var userapi = {
     getallUsers: function(callback) {
