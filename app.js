@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -26,7 +25,7 @@ db.on('error', function (err) {
   console.log('Connection error', err);
 });
 db.once('open', function () {
-  console.log('Connected to DB.');
+ console.log('Connected to DB.');
 });
 
 
@@ -53,8 +52,11 @@ app.use(passport.session());
  var initPassport = require('./passport/init');
  initPassport(passport);
 
- app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', indexRouter);
+
+var users = require('./routes/users')(passport);
+app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
