@@ -7,7 +7,8 @@ var userSchema = new Schema({
     firstName: String,
     lastName: String,
     location: String,
-    mobile:String
+    mobile:String,
+    dob:String
 });
 
 module.exports = mongoose.model('users',userSchema);
