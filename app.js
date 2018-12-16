@@ -12,6 +12,8 @@ var indexRouter = require('./routes/incident');
 var profileRouter = require('./routes/profile')
 var incidentRouter = require('./routes/incident')
 var notificationRouter = require('./routes/notification')
+var sosservicesRouter = require('./routes/sosservices')
+var nonsosservicesRouter = require('./routes/nonsosservices')
 
 var app = express();
 
@@ -44,8 +46,6 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
  // Using the flash middleware provided by connect-flash to store messages in session
  // and displaying in templates
  var flash = require('connect-flash');
@@ -55,13 +55,16 @@ app.use(passport.session());
  var initPassport = require('./passport/init');
  initPassport(passport);
 
+
 app.use('/profile',profileRouter);
 app.use('/incident',incidentRouter);
 app.use('/notification',notificationRouter);
+app.use('/sosservices',sosservicesRouter);
+app.use('/nonsosservices',nonsosservicesRouter);
+
 
 var users = require('./routes/users')(passport);
 app.use('/users', users);
-
 
 
 // catch 404 and forward to error handler

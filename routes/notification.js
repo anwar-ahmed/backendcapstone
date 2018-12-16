@@ -13,14 +13,11 @@ router.post('/', function(req, res) {
     function(err, doc) {
       new  Notification  ({
         _id: "NOT000"+ doc.seq,
-        requestedby: req.body.requestedby,
-        emailId: req.body.emailId,
-        opened: req.body.opened,
         type: req.body.type,
-        location: req.body.location,
-        description: req.body.description,
-        priority: "low",
-        status: "open"
+        emailId: req.body.emailId,
+        incidentId: req.body.incidentId,
+        opened: req.body.opened,
+        message: req.body.message
       }).save(function(err,incident){
         if (err) {
           res.json({success:false});      
@@ -28,7 +25,6 @@ router.post('/', function(req, res) {
         else  {  
         res.json({success:true});
         }
-       
       })
     });
    }

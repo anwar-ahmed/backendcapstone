@@ -14,41 +14,20 @@ var router = express.Router();
 //   });
 // });
 
-
-// router.post('/register', function(req, res) {
-//   var user = {};
-//   user.emailId = req.body.emailId;
-//   user.password = req.body.password;
-//   user.firstName = req.body.firstName;
-//   user.lastName = req.body.lastName;
-//   user.location = req.body.location;
-//   user.mobile = req.body.mobile;
-//   userapi.saveUser(user, function(err, user) {
-
-//     if(err){ 
-//       res.send(err);               
-//    } 
-//    else{       
-//          res.json({message:"User has been Inserted..!!"});
-//    }
-//   });
-// });
-
-
-
 module.exports = function(passport){
 
 	/* Handle Login POST */
   router.post('/login', function(req, res, next) {
     passport.authenticate('login', function(err, user, info) {
-        if (err) return res.status(500).json({
+        if (err) return res.json({
             message: 'Server Error'
         });
         else if (user) {
-            return res.status(200).json({
-                user: user
+            return res.json({
+                user: user,
+                message: 'Valid User'
             });
-        } else return res.status(500).json({
+        } else return res.json({
             message: 'Invalid User'
         });
     })(req, res, next);
@@ -58,13 +37,13 @@ module.exports = function(passport){
     /* user signup action to save user data in mongodb using passport*/
     router.post('/signup', function(req, res, next) {
       passport.authenticate('signup', function(err, newUser, info) {
-          if (err) return res.status(500).json({
+          if (err) return res.json({
               status: 'signup failed'
           });
-          else if (newUser) return res.status(200).json({
+          else if (newUser) return res.json({
               status: 'signup success'
           });
-          else return res.status(500).json({
+          else return res.json({
               status: 'username already exsist'
           });
       })(req, res, next);
@@ -85,6 +64,18 @@ module.exports = function(passport){
         }
     });
 });
+
+router.get('/auth/facebook',
+ passport.authenticate('facebook'), (req,res) => {
+    console.log('not called')
+ });
+
+
+router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: 'http://localhost:3001/',
+                                      failureRedirect: 'http://localhost:3001/login-page' }),(req,res) => {
+                                        console.log('red')
+                                      });
 
 	return router;
 }
