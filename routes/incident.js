@@ -13,12 +13,17 @@ router.post('/', function(req, res) {
     function(err, doc) {
       new  Incident  ({
         _id: "INC000"+ doc.seq,
-        type: req.body.type,
+        requestedby: req.body.requestedby,
         emailId: req.body.emailId,
         opened: req.body.opened,
-        message: req.body.message,
+        type: req.body.type,
+        location: req.body.location,
+        description: req.body.description,
+        priority: "low",
+        status: "open"
       }).save(function(err,incident){
         if (err) {
+      
           res.json({success:false});      
         }
         else  {  
