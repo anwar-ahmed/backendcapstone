@@ -24,7 +24,10 @@ app.set('view engine', 'jade');
 //Connect to db 
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/esim');
+//mongoose.connect('mongodb://localhost:27017/esim');
+mongoose.connect('mongodb+srv://testuser:testuser@cluster0-sgehz.mongodb.net/esim?retryWrites=true',{ useNewUrlParser: true });
+
+
  var db = mongoose.connection;
 db.on('error', function (err) {
   console.log('Connection error', err);
