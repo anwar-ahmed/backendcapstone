@@ -1,4 +1,4 @@
-var userapi = require('../dataApi/userapi')
+// var userapi = require('../dataApi/userapi')
 var express = require('express');
 var router = express.Router();
 
