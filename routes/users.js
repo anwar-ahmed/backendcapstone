@@ -72,7 +72,7 @@ router.get('/auth/facebook',
 
 
 router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: 'http://localhost:3001/',
+  passport.authenticate('facebook', { successRedirect: 'http://localhost:3001/landing-page',
                                       failureRedirect: 'http://localhost:3001/login-page' }),(req,res) => {
                                         console.log('red')
                                       });
