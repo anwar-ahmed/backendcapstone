@@ -2,9 +2,10 @@ var express = require('express');
 var Sosservice = require('../models/sosservices');
 var Counters = require('../models/counters');
 var router = express.Router();
+var auth = require('../passport/isauth')
 
 
-router.post('/', function(req, res) {
+router.post('/', auth.isAuthenticated,function(req, res) {
 
     Counters.findOneAndUpdate(
     { _id: "sosId" },
