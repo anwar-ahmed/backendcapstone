@@ -72,8 +72,8 @@ router.get('/auth/facebook',
 
 
 router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: 'http://localhost:3001/landing-page',
-                                      failureRedirect: 'http://localhost:3001/login-page' }),(req,res) => {
+  passport.authenticate('facebook', { successRedirect: 'https://eismwip.herokuapp.com/landing-page',
+                                      failureRedirect: 'https://eismwip.herokuapp.com/login-page' }),(req,res) => {
                                         console.log('red')
                                       });
 

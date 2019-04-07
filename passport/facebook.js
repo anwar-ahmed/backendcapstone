@@ -3,9 +3,9 @@ var passport = require('passport')
 
   module.exports = function(passport){
     passport.use(new FacebookStrategy({
-      clientID: 784574761883624,
-      clientSecret: "11d4e1daad62ed83b628e123458aa21e",
-      callbackURL: "http://localhost:3000/users/auth/facebook/callback"
+      clientID: 431430500962344,
+      clientSecret: "7a882241e7a6c34470d948607f71911d",
+      callbackURL: "https://backendeim.herokuapp.com/users/auth/facebook/callback"
     },
 
   function(accessToken, refreshToken, profile, done) {
