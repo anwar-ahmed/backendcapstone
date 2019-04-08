@@ -4,7 +4,7 @@ var router = express.Router();
 var auth = require('../passport/isauth')
 
 /* GET user profile. */
-router.get('/:emailId',auth.isAuthenticated, function(req, res) {
+router.get('/:emailId', function(req, res) {
 
   Users.findOne({ emailId: req.params.emailId }, function(err,user){
     if(err)

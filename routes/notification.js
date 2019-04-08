@@ -5,7 +5,7 @@ var router = express.Router();
 var auth = require('../passport/isauth')
 
 
-router.post('/', auth.isAuthenticated,function(req, res) {
+router.post('/',function(req, res) {
 
   Counters.findOneAndUpdate(
     { _id: "notificationId" },
@@ -32,7 +32,7 @@ router.post('/', auth.isAuthenticated,function(req, res) {
 );// insert incident record with notification number
 
 
-router.get('/', auth.isAuthenticated, function(req, res) {
+router.get('/', function(req, res) {
     Notification.find({},function(err, results, count){
     if(err) {
       res.json({success:false})
@@ -41,7 +41,7 @@ router.get('/', auth.isAuthenticated, function(req, res) {
    });
  }); // get all notification
 
-router.delete('/:id',auth.isAuthenticated,function(req,res,next){
+router.delete('/:id',function(req,res,next){
     Notification.remove({'_id': req.params.id},function(err,question){
       if(err) {
         res.json({deleteStatus:'Deleted Question:' +  err });

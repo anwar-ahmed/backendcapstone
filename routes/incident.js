@@ -5,7 +5,7 @@ var router = express.Router();
 var auth = require('../passport/isauth')
 
 
-router.post('/',auth.isAuthenticated, function(req, res) {
+router.post('/', function(req, res) {
 
   Counters.findOneAndUpdate(
     { _id: "incidentId" },
@@ -37,7 +37,7 @@ router.post('/',auth.isAuthenticated, function(req, res) {
 );// insert incident record with incident number
 
 
-router.get('/:searchText', auth.isAuthenticated, function(req, res) {
+router.get('/:searchText', function(req, res) {
   Incident.find({'description':{'$regex': req.params.searchText,'$options':'i'}},function(err, results, count){
       if(err) {
         res.json({success:false})
@@ -57,7 +57,7 @@ router.get('/:searchText', auth.isAuthenticated, function(req, res) {
  }); // get  incident based on id
 
 
- router.post('/detail/:id',auth.isAuthenticated,  function(req, res) {
+ router.post('/detail/:id',  function(req, res) {
   console.log(req.params.id)
   Incident.update({_id: req.params.id},{ $set: { status: req.body.status }},function(err, results){
       if(err) {
@@ -76,7 +76,7 @@ router.get('/',  function(req, res) {
    });
  }); // get all incident
 
-router.delete('/:id',auth.isAuthenticated,function(req,res,next){
+router.delete('/:id',function(req,res,next){
   Incident.remove({'_id': req.params.id},function(err,question){
       if(err) {
         res.json({deleteStatus:'Deleted Question:' +  err });

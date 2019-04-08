@@ -5,7 +5,7 @@ var Counters = require('../models/counters');
 var router = express.Router();
 var auth = require('../passport/isauth')
 
-router.post('/',auth.isAuthenticated,function(req, res) {
+router.post('/',function(req, res) {
     Counters.findOneAndUpdate(
     { _id: "nonsosId" },
     { $inc: { seq: 1 } },
